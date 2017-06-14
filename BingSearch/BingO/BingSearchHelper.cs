@@ -7,69 +7,30 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using BingOResults.Exceptions;
 using BingOResults;
+using System.IO;
 
 namespace BingO
 {
     public class BingSearchHelper
     {
-        private const string WEB_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?";
-        private const string NEWS_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/";
-        private const string TRENDING_TOPICS_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/trendingtopics/";
-
-
-        public static async Task<SearchResult> Query(string query, BingQueryParameters parameters, SearchType type)
-        {
-            HttpClient client = new HttpClient();
-            string uri = BuildQueryString(query, parameters);
-
-            switch (type)
-            {
-                case SearchType.News:
-                    uri = NEWS_SEARCH_REQUEST_URL + BuildQueryString(query, parameters);
-                    break;
-                case  SearchType.NormalSearch:
-                    uri = NEWS_SEARCH_REQUEST_URL + BuildQueryString(query, parameters);
-                    break;
-                case SearchType.TrendingTopics:
-                    uri = TRENDING_TOPICS_REQUEST_URL + BuildQueryString(query, parameters);
-                    break;
-            }
-           
-            var response = await client.GetAsync(uri);
-            string respString = await response.Content.ReadAsStringAsync();
-
-            var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchResult>(respString);
-
-
-            switch (searchResult.StatusCode)
-            {
-                case 403:
-                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
-                case 401:
-                    throw new AccessDeniedException(searchResult.Message);
-                case 429:
-                    throw new RateLimitExceededException(searchResult.Message);
-                default:
-                    break;
-            }
-
-            return searchResult;
-        }
-
         /// <summary>
-        /// Constructs the URL which will be used for querying
+        /// Query's the bing search api for anything
         /// </summary>
         /// <param name="query"></param>
         /// <param name="parameters"></param>
-        /// <returns></returns>
-        private static string BuildQueryString(string query, BingQueryParameters parameters)
+        /// <returns>Search result containing links, images, news...</returns>
+        public static async Task<SearchResult> Query(string query, BingQueryParameters parameters)
         {
+            HttpClient client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
-            queryString["q"] = query;
 
-            foreach (var property in parameters.GetType().GetProperties())
+            
+
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{parameters.APIKey}");
+            queryString["q"] = query;
+            foreach(var property in parameters.GetType().GetProperties())
             {
-                if (property.Name.Equals("APIKey") || property.GetValue(parameters) == null)
+                if(property.Name.Equals("APIKey") || property.GetValue(parameters) == null)
                 {
                     continue;
                 }
@@ -80,7 +41,31 @@ namespace BingO
                 }
             }
 
-            return Convert.ToString(queryString);
+            var uri = "https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString;
+
+            Debug.WriteLine(uri.ToString());
+
+            var response = await client.GetAsync(uri);
+            string respString = await response.Content.ReadAsStringAsync();
+            
+            var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchResult>(respString);
+
+
+            switch (searchResult.StatusCode)
+            {
+                case 403:
+                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
+                    break;
+                case 401:
+                    throw new AccessDeniedException(searchResult.Message);
+                    break;
+                case 429:
+                    throw new RateLimitExceededException(searchResult.Message);
+                default:
+                    break;
+            }
+            
+            return searchResult;
         }
     }
 }
