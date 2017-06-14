@@ -28,12 +28,11 @@ namespace BingO
         /// <returns></returns>
         public static async Task<SearchResult> WebSearch(string query, BingQueryParameters parameters, string apiKey)
         {
-            string uri = BuildQueryString(query, parameters);
+            string uri = BuildQueryString(query, parameters, WEB_SEARCH_REQUEST_URL);
             string respString = await QueryBingAsync(uri, apiKey);
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchResult>(respString);
-
-
+            
             switch (searchResult.StatusCode)
             {
                 case 403:
@@ -51,7 +50,7 @@ namespace BingO
 
         public static async Task<GlobalNewsSearchResult> SearchNewsGlobally(string query, BingQueryParameters parameters, string apiKey)
         {
-            string uri = BuildQueryString(query, parameters);
+            string uri = BuildQueryString(query, parameters, NEWS_SEARCH_REQUEST_URL);
             string respString = await QueryBingAsync(uri, apiKey);
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GlobalNewsSearchResult>(respString);
@@ -163,7 +162,7 @@ namespace BingO
         /// <param name="query">What is searched for</param>
         /// <param name="parameters">Parameters for research Criterias</param>
         /// <returns>A Well structured URI Which can be used to query the internet</returns>
-        private static string BuildQueryString(string query, BingQueryParameters parameters)
+        private static string BuildQueryString(string query, BingQueryParameters parameters, string requestURL)
         {
             var queryString = HttpUtility.ParseQueryString(string.Empty);
             queryString["q"] = query;
@@ -181,7 +180,7 @@ namespace BingO
                 }
             }
 
-            return Convert.ToString(queryString);
+            return requestURL + queryString;
         }
     }
 }

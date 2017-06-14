@@ -21,7 +21,7 @@ namespace BingOWebSearchResults
         [JsonProperty(PropertyName = "_type")]
         public string Type { get; set; }
         [JsonProperty(PropertyName = "webPages")]
-        public WebPages WebPages { get; set; }
+        public WebSearchResult WebSearchResult { get; set; }
         [JsonProperty(PropertyName = "images")]
         public Images Images { get; set; }
         [JsonProperty(PropertyName = "news")]

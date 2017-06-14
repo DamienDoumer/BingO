@@ -16,7 +16,7 @@ namespace BingOWebSearchResults
         [JsonProperty(PropertyName = "isFamilyFriendly")]
         public bool IsFamilyFriendly { get; set; }
         [JsonProperty(PropertyName = "value")]
-        public List<VideoSearchResult> Value { get; set; }
+        public List<VideoSearchResult> VideoSearchResult { get; set; }
         [JsonProperty(PropertyName = "scenario")]
         public string Scenario { get; set; }
     }

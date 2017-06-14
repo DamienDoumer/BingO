@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Configuration;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace BingO.Tests
 {
@@ -9,23 +10,17 @@ namespace BingO.Tests
     public class BingSearchTest
     {
         string query = "Bill Gates";
-        //string reamera = ConfigurationManager.AppSettings["reamera"];
+        //string key = ConfigurationManager.AppSettings["reamera"];
 
         [Test]
-        public void ShouldSearchWeb()
+        public void ShouldSearchWebForArticles()
         {
             string k = GetKey();
 
-            SearchResult result = BingSearchHelper.Query(query,
-                   new BingQueryParameters(
-                   apiKey: k,
-                   count: 10,
-                   offset: 0,
-                   mkt: "en-us",
-                   safeSearch: "Moderate")
-               , SearchType.WebSearch).Result;
+            var result = SearchWeb(query).Result;
 
-            Assert.That(result, Is.Not.Null);
+            //Check if the collecction has 
+            Assert.That(result.WebSearchResult.WebPages, Has.Property("EncodingFormat").Some.ContainValue("png"));
         }
 
         [Test]
@@ -33,22 +28,20 @@ namespace BingO.Tests
         {
             string k = GetKey();
 
-            SearchResult result = BingSearchHelper.Query(query,
-                   new BingQueryParameters(
-                   apiKey: k,
-                   count: 10,
-                   offset: 0,
-                   mkt: "en-us",
-                   safeSearch: "Moderate")
-               , SearchType.WebSearch).Result;
+            var result = SearchWeb(query).Result;
 
-            Assert.That(result.Images.ImageResults, Is.Not.Null);
+            Assert.That(result.Images.ImageResults, Is.All.Not.Empty);
         }
 
         [Test]
         public void ShouldSearchNews()
         {
+            string k = GetKey();
 
+            var result = SearchWeb(query).Result;
+
+            //Assert.That(result.News.NewsSearchResults, Has.Some.Property(""));
+            Assert.That(result.News.NewsSearchResults, Is.All.Not.Empty);
         }
 
         [Test]
@@ -60,7 +53,11 @@ namespace BingO.Tests
         [Test]
         public void ShouldSearchVideos()
         {
+            string k = GetKey();
 
+            var result = SearchWeb(query).Result;
+
+            Assert.That(result.Videos.VideoSearchResult, Is.All.Not.Empty);
         }
         
         private string GetKey()
@@ -70,6 +67,21 @@ namespace BingO.Tests
             reader.Close();
 
             return key;
+        }
+
+        private async Task<SearchResult> SearchWeb(string q)
+        {
+            SearchResult result = await BingSearchHelper.WebSearch(query,
+                   new BingQueryParameters()
+                   {
+                       Count = 10,
+                       Offset = 0,
+                       MKT = "en-us",
+                       SafeSearch = "Moderate"
+                   }
+               , GetKey());
+
+            return result;
         }
     }
 }

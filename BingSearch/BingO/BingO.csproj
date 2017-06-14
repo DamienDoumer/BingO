@@ -60,7 +60,19 @@
     <Compile Include="CategoryNewsResult\Provider.cs" />
     <Compile Include="CategoryNewsResult\Provider2.cs" />
     <Compile Include="CategoryNewsResult\Thumbnail.cs" />
+    <Compile Include="GlobalNewsResults\About.cs" />
+    <Compile Include="GlobalNewsResults\About2.cs" />
+    <Compile Include="GlobalNewsResults\ClusteredArticle.cs" />
     <Compile Include="GlobalNewsResults\GlobalNewsSearchResult.cs" />
+    <Compile Include="GlobalNewsResults\Image.cs" />
+    <Compile Include="GlobalNewsResults\Mention.cs" />
+    <Compile Include="GlobalNewsResults\NewsArticle.cs" />
+    <Compile Include="GlobalNewsResults\Provider.cs" />
+    <Compile Include="GlobalNewsResults\Provider2.cs" />
+    <Compile Include="GlobalNewsResults\Sort.cs" />
+    <Compile Include="GlobalNewsResults\Thumbnail.cs" />
+    <Compile Include="GlobalNewsResults\Thumbnail2.cs" />
+    <Compile Include="GlobalNewsResults\Video.cs" />
     <Compile Include="NewsCategories.cs" />
     <Compile Include="TrendingTopicsNewsResults\Image.cs" />
     <Compile Include="TrendingTopicsNewsResults\NewsArticle.cs" />
@@ -79,7 +91,6 @@
     <Compile Include="WebSearchResults\VideoSearchResult.cs" />
     <Compile Include="WebSearchResults\WebPages.cs" />
     <Compile Include="WebSearchResults\WepPageResult.cs" />
-    <Compile Include="SearchType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
