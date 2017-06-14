@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace BingO.GlobalNewsResults
@@ -15,100 +16,147 @@ namespace BingO.GlobalNewsResults
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
-        public string _type { get; set; }
-        public string readLink { get; set; }
-        public int totalEstimatedMatches { get; set; }
-        public List<Sort> sort { get; set; }
-        public List<Value> value { get; set; }
+        [JsonProperty(PropertyName = "_type")]
+        public string Type { get; set; }
+        [JsonProperty(PropertyName = "readLink")]
+        public string ReadLink { get; set; }
+        [JsonProperty(PropertyName = "totalEstimatedMatches")]
+        public int TotalEstimatedMatches { get; set; }
+        [JsonProperty(PropertyName = "sort")]
+        public List<Sort> Sort { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public List<NewsArticle> NewsArticles { get; set; }
     }
 
     public class Sort
     {
-        public string name { get; set; }
-        public string id { get; set; }
-        public bool isSelected { get; set; }
-        public string url { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+        [JsonProperty(PropertyName = "isSelected")]
+        public bool IsSelected { get; set; }
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
     }
 
     public class Thumbnail
     {
-        public string contentUrl { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
+        [JsonProperty(PropertyName = "contentUrl")]
+        public string ContentUrl { get; set; }
+        [JsonProperty(PropertyName = "width")]
+        public int Width { get; set; }
+        [JsonProperty(PropertyName = "height")]
+        public int Height { get; set; }
     }
 
     public class Image
     {
-        public Thumbnail thumbnail { get; set; }
+        [JsonProperty(PropertyName = "thumbnail")]
+        public Thumbnail Thumbnail { get; set; }
     }
 
     public class About
     {
-        public string readLink { get; set; }
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "readLink")]
+        public string ReadLink { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 
     public class Provider
     {
-        public string _type { get; set; }
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "_type")]
+        public string Type { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 
     public class About2
     {
-        public string readLink { get; set; }
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "readLink")]
+        public string ReadLink { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 
     public class Provider2
     {
-        public string _type { get; set; }
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "_type")]
+        public string Type { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 
     public class ClusteredArticle
     {
-        public string name { get; set; }
-        public string url { get; set; }
-        public string description { get; set; }
-        public List<About2> about { get; set; }
-        public List<Provider2> provider { get; set; }
-        public string datePublished { get; set; }
-        public string category { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+        [JsonProperty(PropertyName = "about")]
+        public List<About2> About { get; set; }
+        [JsonProperty(PropertyName = "provider")]
+        public List<Provider2> Provider { get; set; }
+        [JsonProperty(PropertyName = "datePublished")]
+        public string DatePublished { get; set; }
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
     }
 
     public class Mention
     {
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 
     public class Thumbnail2
     {
-        public int width { get; set; }
-        public int height { get; set; }
+        [JsonProperty(PropertyName = "width")]
+        public int Width { get; set; }
+        [JsonProperty(PropertyName = "height")]
+        public int Height { get; set; }
     }
 
     public class Video
     {
-        public string name { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "thumbnailUrl")]
         public string thumbnailUrl { get; set; }
+        [JsonProperty(PropertyName = "embedHtml")]
         public string embedHtml { get; set; }
+        [JsonProperty(PropertyName = "allowHttpsEmbed")]
         public bool allowHttpsEmbed { get; set; }
+        [JsonProperty(PropertyName = "thumbnail")]
         public Thumbnail2 thumbnail { get; set; }
     }
 
-    public class Value
+    public class NewsArticle
     {
-        public string name { get; set; }
-        public string url { get; set; }
-        public Image image { get; set; }
-        public string description { get; set; }
-        public List<About> about { get; set; }
-        public List<Provider> provider { get; set; }
-        public string datePublished { get; set; }
-        public string category { get; set; }
-        public List<ClusteredArticle> clusteredArticles { get; set; }
-        public List<Mention> mentions { get; set; }
-        public Video video { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
+        [JsonProperty(PropertyName = "image")]
+        public Image Image { get; set; }
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+        [JsonProperty(PropertyName = "about")]
+        public List<About> About { get; set; }
+        [JsonProperty(PropertyName = "provider")]
+        public List<Provider> Provider { get; set; }
+        [JsonProperty(PropertyName = "datePublished")]
+        public string DatePublished { get; set; }
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
+        [JsonProperty(PropertyName = "clusteredArticles")]
+        public List<ClusteredArticle> ClusteredArticles { get; set; }
+        [JsonProperty(PropertyName = "mentions")]
+        public List<Mention> Mentions { get; set; }
+        [JsonProperty(PropertyName = "video")]
+        public Video Video { get; set; }
     }
 }

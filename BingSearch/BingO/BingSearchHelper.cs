@@ -56,7 +56,6 @@ namespace BingO
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GlobalNewsSearchResult>(respString);
 
-
             switch (searchResult.StatusCode)
             {
                 case 403:
