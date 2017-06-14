@@ -87,7 +87,7 @@ namespace BingOWebSearchResults
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
         [JsonProperty(PropertyName = "value")]
-        public List<RelatedSearchResult> Value { get; set; }
+        public List<RelatedSearchResult> RelatedSearchResults { get; set; }
     }
     [Serializable]
     public class Publisher

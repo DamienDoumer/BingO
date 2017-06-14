@@ -12,6 +12,6 @@ namespace BingOWebSearchResults
         [JsonProperty(PropertyName = "readLink")]
         public string ReadLink { get; set; }
         [JsonProperty(PropertyName = "value")]
-        public List<NewsSearchResult> Value { get; set; }
+        public List<NewsSearchResult> NewsSearchResults { get; set; }
     }
 }

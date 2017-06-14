@@ -16,9 +16,9 @@ namespace BingO.CategoryNewsSearchResult
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
         [JsonProperty(PropertyName = "about")]
-        public List<About> About { get; set; }
+        public List<About> Abouts { get; set; }
         [JsonProperty(PropertyName = "provider")]
-        public List<Provider> Provider { get; set; }
+        public List<Provider> Providers { get; set; }
         [JsonProperty(PropertyName = "datePublished")]
         public string DatePublished { get; set; }
         [JsonProperty(PropertyName = "category")]

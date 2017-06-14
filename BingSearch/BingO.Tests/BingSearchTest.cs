@@ -42,7 +42,7 @@ namespace BingO.Tests
                    safeSearch: "Moderate")
                , SearchType.NormalSearch).Result;
 
-            Assert.That(result.Images.Value, Is.Not.Null);
+            Assert.That(result.Images.ImageResults, Is.Not.Null);
         }
 
         [Test]

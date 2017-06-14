@@ -16,7 +16,7 @@ namespace BingOWebSearchResults
         [JsonProperty(PropertyName = "isFamilyFriendly")]
         public bool IsFamilyFriendly { get; set; }
         [JsonProperty(PropertyName = "value")]
-        public List<ImageResult> Value { get; set; }
+        public List<ImageResult> ImageResults { get; set; }
         [JsonProperty(PropertyName = "displayShoppingSourcesBadges")]
         public bool DisplayShoppingSourcesBadges { get; set; }
         [JsonProperty(PropertyName = "displayRecipeSourcesBadges")]
