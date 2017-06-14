@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BingOResults.Exceptions
+namespace BingOWebSearchResults.Exceptions
 {
     public class RateLimitExceededException : Exception
     {

@@ -1,4 +1,4 @@
-﻿using BingOResults;
+﻿using BingOWebSearchResults;
 using NUnit.Framework;
 using System.Configuration;
 using System.IO;

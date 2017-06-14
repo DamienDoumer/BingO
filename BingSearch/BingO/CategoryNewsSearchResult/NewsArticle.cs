@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
-namespace BingO.NewsSearchResult
+namespace BingO.CategoryNewsSearchResult
 {
+    [Serializable]
     public class NewsArticle
     {
         [JsonProperty(PropertyName = "name")]

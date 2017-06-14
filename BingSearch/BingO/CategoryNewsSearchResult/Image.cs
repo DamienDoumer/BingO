@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System;
 
-namespace BingO.NewsSearchResult
+namespace BingO.CategoryNewsSearchResult
 {
+    [Serializable]
     public class Image
     {
         [JsonProperty(PropertyName = "thumbnail")]

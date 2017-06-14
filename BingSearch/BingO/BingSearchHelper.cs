@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Web;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using BingOResults.Exceptions;
-using BingOResults;
+using BingOWebSearchResults.Exceptions;
+using BingOWebSearchResults;
 
 namespace BingO
 {
@@ -15,7 +15,7 @@ namespace BingO
         private const string WEB_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?";
         private const string NEWS_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/";
         private const string TRENDING_TOPICS_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/trendingtopics/";
-
+        private const string CATEGORY_NEWS_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/?Category=";
 
         public static async Task<SearchResult> Query(string query, BingQueryParameters parameters, SearchType type)
         {

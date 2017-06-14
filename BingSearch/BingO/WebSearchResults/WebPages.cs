@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BingOResults
+namespace BingOWebSearchResults
 {
     [Serializable]
     public class WebPages
