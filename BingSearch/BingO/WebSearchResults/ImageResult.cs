@@ -12,14 +12,14 @@ namespace BingOResults
         public string WebSearchUrl { get; set; }
         [JsonProperty(PropertyName = "thumbnailUrl")]
         public string ThumbnailUrl { get; set; }
+
         [JsonProperty(PropertyName = "datePublished")]
-
         public string DatePublished { get; set; }
+
         [JsonProperty(PropertyName = "contentUrl")]
-
         public string ContentUrl { get; set; }
-        [JsonProperty(PropertyName = "hostPageUrl")]
 
+        [JsonProperty(PropertyName = "hostPageUrl")]
         public string HostPageUrl { get; set; }
         [JsonProperty(PropertyName = "contentSize")]
         public string ContentSize { get; set; }
