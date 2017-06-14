@@ -23,7 +23,7 @@ namespace BingO.Tests
                    offset: 0,
                    mkt: "en-us",
                    safeSearch: "Moderate")
-               , SearchType.NormalSearch).Result;
+               , SearchType.WebSearch).Result;
 
             Assert.That(result, Is.Not.Null);
         }
@@ -40,7 +40,7 @@ namespace BingO.Tests
                    offset: 0,
                    mkt: "en-us",
                    safeSearch: "Moderate")
-               , SearchType.NormalSearch).Result;
+               , SearchType.WebSearch).Result;
 
             Assert.That(result.Images.ImageResults, Is.Not.Null);
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BingO.GlobalNewsSearchResults
+namespace BingO.GlobalNewsResults
 {
-    public class NewsSearchResult
+    public class GlobalNewsSearchResult
     {
         public string _type { get; set; }
         public string readLink { get; set; }

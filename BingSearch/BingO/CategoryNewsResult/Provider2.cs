@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace BingO.CategoryNewsSearchResult
+namespace BingO.CategoryNewsResult
 {
     [Serializable]
-    public class About2
+    public class Provider2
     {
-        [JsonProperty(PropertyName = "readLink")]
-        public string ReadLink { get; set; }
+        [[JsonProperty(PropertyName = "_type")]
+        public string Type { get; set; }
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
     }

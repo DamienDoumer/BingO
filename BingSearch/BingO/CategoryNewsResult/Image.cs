@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace BingO.CategoryNewsSearchResult
+namespace BingO.CategoryNewsResult
 {
     [Serializable]
     public class Image

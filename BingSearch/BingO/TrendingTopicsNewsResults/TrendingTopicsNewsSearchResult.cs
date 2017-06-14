@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BingO.TrendingTopicsNewsSearchResults
+namespace BingO.TrendingTopicsNewsResults
 {
     [Serializable]
-    public class NewsSearchResult
+    public class TrendingTopicsNewsSearchResult
     {
         [JsonProperty(PropertyName = "_type")]
         public string Type { get; set; }

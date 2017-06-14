@@ -12,7 +12,8 @@ namespace BingO
     public enum SearchType
     {
         News,
-        NormalSearch,
-        TrendingTopics
+        WebSearch,
+        TrendingTopics,
+        CategoryNews
     }
 }

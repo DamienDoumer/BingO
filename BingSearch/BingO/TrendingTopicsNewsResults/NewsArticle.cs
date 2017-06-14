@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace BingO.TrendingTopicsNewsSearchResults
+namespace BingO.TrendingTopicsNewsResults
 {
     [Serializable]
     public class NewsArticle

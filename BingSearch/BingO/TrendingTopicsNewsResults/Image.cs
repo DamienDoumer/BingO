@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BingO.TrendingTopicsNewsSearchResults
+namespace BingO.TrendingTopicsNewsResults
 {
     [Serializable]
     public class Image

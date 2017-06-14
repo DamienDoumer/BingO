@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BingO.CategoryNewsSearchResult
+namespace BingO.CategoryNewsResult
 {
     [Serializable]
     public class NewsArticle

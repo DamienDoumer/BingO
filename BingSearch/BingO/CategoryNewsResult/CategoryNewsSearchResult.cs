@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace BingO.CategoryNewsSearchResult
+namespace BingO.CategoryNewsResult
 {
     [Serializable]
-    class NewsSearchResult
+    public class CategoryNewsSearchResult
     {
         [JsonProperty(PropertyName = "_type")]
         public string Type { get; set; }
