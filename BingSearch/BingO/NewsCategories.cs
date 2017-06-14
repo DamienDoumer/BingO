@@ -8,6 +8,13 @@ namespace BingO
 {
     public enum NewsCategories
     {
-        World
+        World,
+        US_UK,
+        Sports,
+        ScienceAndTechnology,
+        Politics,
+        Health,
+        Entertainment,
+        Buisiness
     }
 }

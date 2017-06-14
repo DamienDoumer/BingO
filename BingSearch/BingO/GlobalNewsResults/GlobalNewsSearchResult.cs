@@ -5,6 +5,16 @@ namespace BingO.GlobalNewsResults
 {
     public class GlobalNewsSearchResult
     {
+        /// <summary>
+        /// For Exception Handling
+        /// </summary>
+        [JsonProperty(PropertyName = "statusCode")]
+        public int StatusCode { get; set; }
+        /// <summary>
+        /// For Exception Handling
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
         public string _type { get; set; }
         public string readLink { get; set; }
         public int totalEstimatedMatches { get; set; }

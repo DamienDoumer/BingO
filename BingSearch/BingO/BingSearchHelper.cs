@@ -8,6 +8,8 @@ using System.Diagnostics;
 using BingOWebSearchResults.Exceptions;
 using BingOWebSearchResults;
 using BingO.CategoryNewsResult;
+using BingO.TrendingTopicsNewsResults;
+using BingO.GlobalNewsResults;
 
 namespace BingO
 {
@@ -23,32 +25,11 @@ namespace BingO
         /// </summary>
         /// <param name="query">The Query the user searches for</param>
         /// <param name="parameters">Query Parameters, to Enance searching criterias</param>
-        /// <param name="type">Search type, either news search, WebSearch...</param>
         /// <returns></returns>
-        public static async Task<SearchResult> Query(SearchType type, string query = "", BingQueryParameters parameters = null)
+        public static async Task<SearchResult> WebSearch(string query, BingQueryParameters parameters, string apiKey)
         {
-            HttpClient client = new HttpClient();
-            string uri = string.Empty ;
-            //string uri = BuildQueryString(query, parameters);
-
-            switch (type)
-            {
-                case SearchType.TrendingTopics:
-                    uri = TRENDING_TOPICS_REQUEST_URL;
-                    break;
-                case SearchType.News:
-                    uri = NEWS_SEARCH_REQUEST_URL + BuildQueryString(query, parameters);
-                    break;
-                case  SearchType.WebSearch:
-                    uri = NEWS_SEARCH_REQUEST_URL + BuildQueryString(query, parameters);
-                    break;
-                case SearchType.CategoryNews:
-                    uri = CATEGORY_NEWS_REQUEST_URL;
-                    break;
-            }
-           
-            var response = await client.GetAsync(uri);
-            string respString = await response.Content.ReadAsStringAsync();
+            string uri = BuildQueryString(query, parameters);
+            string respString = await QueryBingAsync(uri, apiKey);
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchResult>(respString);
 
@@ -68,16 +49,86 @@ namespace BingO
             return searchResult;
         }
 
+        public static async Task<GlobalNewsSearchResult> SearchNewsGlobally(string query, BingQueryParameters parameters, string apiKey)
+        {
+            string uri = BuildQueryString(query, parameters);
+            string respString = await QueryBingAsync(uri, apiKey);
+
+            var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GlobalNewsSearchResult>(respString);
+
+
+            switch (searchResult.StatusCode)
+            {
+                case 403:
+                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
+                case 401:
+                    throw new AccessDeniedException(searchResult.Message);
+                case 429:
+                    throw new RateLimitExceededException(searchResult.Message);
+                default:
+                    break;
+            }
+
+            return searchResult;
+        }
         /// <summary>
         /// Search Bing Api for News ranked by Category
         /// </summary>
         /// <param name="newsCategories">News Categories</param>
         /// <returns>News Articles found</returns>
-        public async static Task<CategoryNewsSearchResult> SearchNewsByCategory(NewsCategories newsCategories)
+        public async static Task<CategoryNewsSearchResult> SearchNewsByCategory(NewsCategories newsCategories, string apiKey)
         {
-            var respString = await QueryBingAsync(CATEGORY_NEWS_REQUEST_URL + newsCategories.ToString());
+            string category = string.Empty;
+
+            if (newsCategories == NewsCategories.US_UK)
+            {
+                category = "US/UK";
+            }
+            else
+            {
+                category = newsCategories.ToString();
+            }
+            
+            var respString = await QueryBingAsync(CATEGORY_NEWS_REQUEST_URL + category, apiKey);
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryNewsSearchResult>(respString);
 
+            switch (searchResult.StatusCode)
+            {
+                case 403:
+                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
+                case 401:
+                    throw new AccessDeniedException(searchResult.Message);
+                case 429:
+                    throw new RateLimitExceededException(searchResult.Message);
+                default:
+                    break;
+            }
+
+            return searchResult;
+        }
+
+        /// <summary>
+        /// Search bing for news by trending topics
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
+        public async static Task<TrendingTopicsNewsSearchResult> SearchNewsByTrendingTopics(string apiKey)
+        {
+            var respString = await QueryBingAsync(CATEGORY_NEWS_REQUEST_URL, apiKey);
+            var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<TrendingTopicsNewsSearchResult>(respString);
+
+            switch (searchResult.StatusCode)
+            {
+                case 403:
+                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
+                case 401:
+                    throw new AccessDeniedException(searchResult.Message);
+                case 429:
+                    throw new RateLimitExceededException(searchResult.Message);
+                default:
+                    break;
+            }
+            
             return searchResult;
         }
 
@@ -86,7 +137,7 @@ namespace BingO
         /// </summary>
         /// <param name="uri">the Uri to the online server</param>
         /// <returns>Json Response to query</returns>
-        private static async Task<string> QueryBingAsync(string uri)
+        private static async Task<string> QueryBingAsync(string uri, string apiKey)
         {
             string respString = string.Empty;
 
@@ -94,6 +145,7 @@ namespace BingO
             {
                 try
                 {
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{apiKey}");
                     var response = await client.GetAsync(uri);
                     respString = await response.Content.ReadAsStringAsync();
                 }
