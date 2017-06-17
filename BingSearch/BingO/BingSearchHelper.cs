@@ -16,7 +16,7 @@ namespace BingO
     public class BingSearchHelper
     {
         private const string WEB_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/search?";
-        private const string NEWS_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/";
+        private const string NEWS_SEARCH_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/search?";
         private const string TRENDING_TOPICS_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/trendingtopics/";
         private const string CATEGORY_NEWS_REQUEST_URL = "https://api.cognitive.microsoft.com/bing/v5.0/news/?Category=";
 
@@ -48,6 +48,13 @@ namespace BingO
             return searchResult;
         }
 
+        /// <summary>
+        /// Search news For any prefered domain or topic the user preffers
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="parameters"></param>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
         public static async Task<GlobalNewsSearchResult> SearchNewsGlobally(string query, BingQueryParameters parameters, string apiKey)
         {
             string uri = BuildQueryString(query, parameters, NEWS_SEARCH_REQUEST_URL);
@@ -69,6 +76,7 @@ namespace BingO
 
             return searchResult;
         }
+        
         /// <summary>
         /// Search Bing Api for News ranked by Category
         /// </summary>
@@ -86,8 +94,9 @@ namespace BingO
             {
                 category = newsCategories.ToString();
             }
-            
-            var respString = await QueryBingAsync(CATEGORY_NEWS_REQUEST_URL + category, apiKey);
+
+            string queryString = CATEGORY_NEWS_REQUEST_URL + category;
+            var respString = await QueryBingAsync(queryString, apiKey);
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryNewsSearchResult>(respString);
 
             switch (searchResult.StatusCode)

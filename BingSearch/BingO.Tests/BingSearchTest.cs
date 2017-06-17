@@ -1,4 +1,7 @@
-﻿using BingOWebSearchResults;
+﻿using BingO.CategoryNewsResult;
+using BingO.GlobalNewsResults;
+using BingO.TrendingTopicsNewsResults;
+using BingOWebSearchResults;
 using NUnit.Framework;
 using System.Configuration;
 using System.IO;
@@ -39,15 +42,43 @@ namespace BingO.Tests
             string k = GetKey();
 
             var result = SearchWeb(query).Result;
-
-            //Assert.That(result.News.NewsSearchResults, Has.Some.Property(""));
+            
             Assert.That(result.News.NewsSearchResults, Is.All.Not.Null);
         }
 
         [Test]
-        public void ShouldSearchTrendingTopics()
+        public async Task ShouldSearchNewsByTrendingTopicsAsync()
         {
+            string k = GetKey();
 
+            TrendingTopicsNewsSearchResult trendingTop = await BingSearchHelper.SearchNewsByTrendingTopics(k);
+
+            Assert.That(trendingTop.NewsArticles, Is.All.Not.Null);
+        }
+
+        [Test]
+        public async Task ShouldSearchNewsByCategory()
+        {
+            string k = GetKey();
+
+            CategoryNewsSearchResult categoryNews = await BingSearchHelper.SearchNewsByCategory(NewsCategories.Health, k);
+
+            Assert.That(categoryNews.NewsArticles, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task ShouldSearchNewsGloaballyForAnyTopic()
+        {
+            string k = GetKey();
+
+            GlobalNewsSearchResult global = await BingSearchHelper.SearchNewsGlobally(query, new BingQueryParameters()
+            {
+                Count = 10,
+                Offset = 0,
+                MKT = "en-us"
+            }, k);
+
+            Assert.That(global.NewsArticles, Is.All.Not.Null);
         }
 
         [Test]
