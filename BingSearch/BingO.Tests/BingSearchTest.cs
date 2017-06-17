@@ -20,7 +20,7 @@ namespace BingO.Tests
             var result = SearchWeb(query).Result;
 
             //Check if the collecction has 
-            Assert.That(result.WebSearchResult.WebPages, Has.Property("EncodingFormat").Some.ContainValue("png"));
+            Assert.That(result.WebSearchResult.WebPages, Is.All.Not.Null);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace BingO.Tests
 
             var result = SearchWeb(query).Result;
 
-            Assert.That(result.Images.ImageResults, Is.All.Not.Empty);
+            Assert.That(result.Images.ImageResults, Is.All.Not.Null);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace BingO.Tests
             var result = SearchWeb(query).Result;
 
             //Assert.That(result.News.NewsSearchResults, Has.Some.Property(""));
-            Assert.That(result.News.NewsSearchResults, Is.All.Not.Empty);
+            Assert.That(result.News.NewsSearchResults, Is.All.Not.Null);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace BingO.Tests
 
             var result = SearchWeb(query).Result;
 
-            Assert.That(result.Videos.VideoSearchResult, Is.All.Not.Empty);
+            Assert.That(result.Videos.VideoSearchResult, Is.All.Not.Null);
         }
         
         private string GetKey()
