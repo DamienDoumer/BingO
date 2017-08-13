@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BingQueryParameters.cs" />
     <Compile Include="BingSearchHelper.cs" />
+    <Compile Include="Country.cs" />
     <Compile Include="Exceptions\AccessDeniedException.cs" />
     <Compile Include="Exceptions\OutOfCallVolumeQuotaException.cs" />
     <Compile Include="Exceptions\RateLimitExceededException.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="GlobalNewsResults\Thumbnail.cs" />
     <Compile Include="GlobalNewsResults\Thumbnail2.cs" />
     <Compile Include="GlobalNewsResults\Video.cs" />
+    <Compile Include="Language.cs" />
     <Compile Include="NewsCategories.cs" />
     <Compile Include="TrendingTopicsNewsResults\Image.cs" />
     <Compile Include="TrendingTopicsNewsResults\NewsArticle.cs" />

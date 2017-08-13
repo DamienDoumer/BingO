@@ -32,18 +32,8 @@ namespace BingO
             string respString = await QueryBingAsync(uri, apiKey);
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchResult>(respString);
-            
-            switch (searchResult.StatusCode)
-            {
-                case 403:
-                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
-                case 401:
-                    throw new AccessDeniedException(searchResult.Message);
-                case 429:
-                    throw new RateLimitExceededException(searchResult.Message);
-                default:
-                    break;
-            }
+
+            HandleException(searchResult.StatusCode, searchResult.Message);
 
             return searchResult;
         }
@@ -62,21 +52,11 @@ namespace BingO
 
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GlobalNewsSearchResult>(respString);
 
-            switch (searchResult.StatusCode)
-            {
-                case 403:
-                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
-                case 401:
-                    throw new AccessDeniedException(searchResult.Message);
-                case 429:
-                    throw new RateLimitExceededException(searchResult.Message);
-                default:
-                    break;
-            }
+            HandleException(searchResult.StatusCode, searchResult.Message);
 
             return searchResult;
         }
-        
+
         /// <summary>
         /// Search Bing Api for News ranked by Category
         /// </summary>
@@ -99,17 +79,7 @@ namespace BingO
             var respString = await QueryBingAsync(queryString, apiKey);
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryNewsSearchResult>(respString);
 
-            switch (searchResult.StatusCode)
-            {
-                case 403:
-                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
-                case 401:
-                    throw new AccessDeniedException(searchResult.Message);
-                case 429:
-                    throw new RateLimitExceededException(searchResult.Message);
-                default:
-                    break;
-            }
+            HandleException(searchResult.StatusCode, searchResult.Message);
 
             return searchResult;
         }
@@ -124,18 +94,8 @@ namespace BingO
             var respString = await QueryBingAsync(CATEGORY_NEWS_REQUEST_URL, apiKey);
             var searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<TrendingTopicsNewsSearchResult>(respString);
 
-            switch (searchResult.StatusCode)
-            {
-                case 403:
-                    throw new OutOfCallVolumeQuotaException(searchResult.Message);
-                case 401:
-                    throw new AccessDeniedException(searchResult.Message);
-                case 429:
-                    throw new RateLimitExceededException(searchResult.Message);
-                default:
-                    break;
-            }
-            
+            HandleException(searchResult.StatusCode, searchResult.Message);
+
             return searchResult;
         }
 
@@ -185,11 +145,26 @@ namespace BingO
                 else
                 {
                     //Get the property's name and its value and set it to the query string
-                    queryString[property.Name] = property.GetValue(parameters).ToString();
+                    queryString[property.Name.ToLower()] = property.GetValue(parameters).ToString();
                 }
             }
 
             return requestURL + queryString;
+        }
+
+        private static void HandleException(int statusCode, string message)
+        {
+            switch (statusCode)
+            {
+                case 403:
+                    throw new OutOfCallVolumeQuotaException(message);
+                case 401:
+                    throw new AccessDeniedException(message);
+                case 429:
+                    throw new RateLimitExceededException(message);
+                default:
+                    break;
+            }
         }
     }
 }

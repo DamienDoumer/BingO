@@ -27,6 +27,17 @@ namespace BingO.Tests
         }
 
         [Test]
+        public void ShouldSearchWebForArticlesWithCountryAndLanguage()
+        {
+            string k = GetKey();
+            
+            var result = SearchWebWithCountryLanguage(query).Result;
+
+            //Check if the collecction has 
+            Assert.That(result.WebSearchResult.WebPages, Is.All.Not.Null);
+        }
+
+        [Test]
         public void ShouldSearchImages()
         {
             string k = GetKey();
@@ -111,6 +122,23 @@ namespace BingO.Tests
                        SafeSearch = "Moderate"
                    }
                , GetKey());
+
+            return result;
+        }
+
+        private async Task<SearchResult> SearchWebWithCountryLanguage(string q)
+        {
+            SearchResult result = await BingSearchHelper.WebSearch(query,
+                  new BingQueryParameters()
+                  {
+                      Count = 10,
+                      Offset = 0,
+                      MKT = "en-us",
+                      SafeSearch = "Moderate",
+                      Language = "fr",
+                      Loc = "fr"
+                  }
+              , GetKey());
 
             return result;
         }
